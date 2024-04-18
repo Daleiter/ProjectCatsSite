@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/x-icon">
+    <title>Project Cats</title>
+    <style>
+        /* body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #131416;
+            color: white;
+        } */
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #131416;
+            color: white;
+            
+            /* width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background: #000; */
+        }
+
+        .glow-on-hover {
+            width: 220px;
+            height: 50px;
+            border: none;
+            outline: none;
+            color: #fff;
+            background: #111;
+            cursor: pointer;
+            position: relative;
+            z-index: 0;
+            border-radius: 10px;
+        }
+
+        .glow-on-hover:before {
+            content: '';
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            position: absolute;
+            top: -2px;
+            left:-2px;
+            background-size: 400%;
+            z-index: -1;
+            filter: blur(5px);
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            animation: glowing 20s linear infinite;
+            opacity: 0;
+            transition: opacity .3s ease-in-out;
+            border-radius: 10px;
+        }
+
+        .glow-on-hover:active {
+            color: #000
+        }
+
+        .glow-on-hover:active:after {
+            background: transparent;
+        }
+
+        .glow-on-hover:hover:before {
+            opacity: 1;
+        }
+
+        .glow-on-hover:after {
+            z-index: -1;
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #111;
+            left: 0;
+            top: 0;
+            border-radius: 10px;
+        }
+
+        @keyframes glowing {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
+        }
+
+
+        div.container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: stretch;
+            height: 100vh;
+        }
+
+        div.column {
+            flex: 1;
+            margin: 20px;
+            padding: 20px;
+            height: max-content;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: #111;
+            color: white;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+        .logo {
+            height: 100px;
+            align-items: center;
+        }
+        div.serverlist {
+    position: relative;
+}
+
+img.serverlistphoto {
+    position: absolute;
+    top: -40px;
+    right: -20px;
+    height: 100px;
+}
+
+div.lk {
+    position: relative;
+}
+
+img.lkphoto {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    height: 80px;
+}
+div.downl {
+    position: relative;
+}
+
+img.downlphoto {
+    transform: rotate(25deg);
+    position: absolute;
+    top: -30px;
+    right: 0px;
+    height: 100px;
+}
+        * {
+  box-sizing: border-box;
+}
+
+.input-group__input {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 100%;
+  max-width: 20em;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+  color: #fff;
+  line-height: 1;
+  border-style: none;
+  outline: none;
+  height: calc(1em + 1.6em + 0.5em);
+  width: 100%;
+  padding: 0.8em 1em;
+  border: 0.25em solid transparent;
+  background-image: linear-gradient(#000, #000), linear-gradient(120deg, #f09 0%, #0ff 50%, #9f0 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  border-radius: 1.8em;
+  background-size: 200% 100%;
+  transition: background-position 0.8s ease-out;
+}
+.input-group__input:hover {
+  background-position: 100% 0;
+}
+.changelog{
+  position: relative;
+  width: 90%
+}
+.date{
+    position: absolute;
+    bottom: -15px;
+    right: 10px; 
+}
+.changebadpassword{
+    display: none;
+}
+.registerbadlogin{
+    display: none;
+}
+.registerbadpassword{
+    display: none;
+}
+.registerbademail{
+    display: none;
+}
+.registerbadpasswordcopy{
+    display: none;
+}
+    </style>
+</head>
+<body>
+    
+    <img class="logo " src="{{ url_for('static', filename='images/logo.png') }}" alt="Project Cats">
+    {% set register = false %}
+    <div class="container">
+            
+        <!-- Перша колонка -->
+       <div class="column glow-on-hover lk">
+        <img class="lkphoto" src="{{ url_for('static', filename='images/wadjara.webp') }}" alt="Project Cats">
+        {% if request.cookies.get('user') is none %}
+        <div  id="loginColumn" style="display: block;">
+            <form id="dataForm">
+        	{% if request.cookies.get('badlogin') is not none %}
+		<span>Не верный логин или пароль</span>
+        	{% endif %}
+                <input class="input-group__input" type="text" id="username" name="username" placeholder="Логин" required>
+                <br>
+                <input class="input-group__input" type="password" id="password" name="password" placeholder="Пароль" required>
+                <br>
+                <button class="glow-on-hover" type="button" onclick="sendDataToLogin(null,null)">Подтвердить</button>
+            </form>
+            <!-- <button onclick="getCookie()">Перевірити куки</button> -->
+            <button class="glow-on-hover" onclick="setRegister()">Регистрация</button>
+        </div>
+        <div  id="registerColumn" style="display: none;">
+            <form id="dataForm">
+                <input class="input-group__input" type="text" id="usernamereg" name="usernamereg" placeholder="Логин" required>
+		<span class="registerbadlogin">Логин Может быть:A-a,0-9</span>
+                <br>
+                <input class="input-group__input" type="Email" id="Email" name="Email" placeholder="Email" required>
+		<span class="registerbademail">Не верный Email</span>
+                <br>
+                <input class="input-group__input" type="password" id="passwordreg" name="passwordreg" placeholder="Пароль" required>
+		<span class="registerbadpassword">Пароль Может быть:A-a,0-9,!@$*</span>
+                <br>
+                <input class="input-group__input" type="password" id="password_copy" name="password_copy" placeholder="Повтори Пароль" required>
+		<span class="registerbadpasswordcopy">Не верный повтор пароля</span>
+                <br>
+                <button class="glow-on-hover" type="button" onclick="sendDataToRegister()">Подтвердить</button>
+            </form>
+            <!-- <button onclick="getCookie()">Перевірити куки</button> -->
+            <button class="glow-on-hover" onclick="setRegister()">Войти</button>
+        </div>
+        {% endif %}
+        {% if request.cookies.get('user') is not none %}
+        <div class="lk">
+        {% for mon in money %}
+        <div>
+        <h2>{{ request.cookies.get('user') }} / Cat Coins: <span id="catCoins">{{ mon[0] }}</span></h2>
+        {% endfor %}
+        </div>
+        <button class=" glow-on-hover" onclick="setChangePassw()">Изменить пароль</button>
+        <button class=" glow-on-hover" onclick="setChangeSkin()">Изменить Скин</button>
+        <button class=" glow-on-hover" onclick="setChangeCloak()">Изменить Плащ</button>
+        <button id="addMoneyBtn" class=" glow-on-hover" onclick="addMoney()">+1k Cat Coins / 5 сек</button>
+        <div class="column" id="changepasswordColumn" style="display: none;">
+            <form id="dataForm">
+            <input class="input-group__input" type="password" id="passwordchange" name="passwordchange" placeholder="Новый пароль" required>
+		<span class="changebadpassword">Пароль Может быть:A-a,0-9,!@$*</span>
+            <br>
+            <button class="glow-on-hover" type="button" onclick="sendDataToChangePassw()">Подтвердить</button>
+            </form>
+            
+        </div>
+        <div class="column" id="setSkinColumn" style="display: none;">
+        <form action="/setskin" method="POST" enctype="multipart/form-data">
+            <label for="file">Файл для скина:</label>
+            <input class="input-group__input" type="file" name="file" id="file" required>
+            <br>
+            <button class="glow-on-hover" type="submit">Загрузить</button>
+        </form>
+        </div>
+        <div class="column" id="setCloaksColumn" style="display: none;">
+            <form action="/setcloaks" method="POST" enctype="multipart/form-data">
+                <label for="file">Файл для плаща:</label>
+                <input class="input-group__input" type="file" name="file" id="file" required>
+                <br>
+                <button class="glow-on-hover" type="submit">Загрузить</button>
+            </form>
+            </div>
+        <button  class="glow-on-hover" onclick="logout()">Выйти</button>
+        </div>
+        {% endif %}
+        </div>
+        <!-- Друга колонка -->
+        <div class="column glow-on-hover downl">
+            <img class="downlphoto " src="{{ url_for('static', filename='images/roket.png') }}" alt="Project Cats">
+            <h3>ChangeLog</h3>
+            <ul>
+                {% for entry in changelog %}
+                <div class=" column glow-on-hover changelog">
+                    <h6>{{ entry[0] }}</h6>
+                    <h2>{{ entry[1] }}</h2>
+                    <li>{{ entry[2] }}</li>
+                    <h6 class="date">{{ entry[3] }}</h6>
+                </div>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Третя колонка -->
+        <div class="column serverlist glow-on-hover">
+            
+            <h3>Minecraft Сервера:</h3>
+            <img class="serverlistphoto" src="{{ url_for('static', filename='images/witchcat.png') }}" alt="Project Cats">
+            <h5>Сборка серверов</h5>
+	    <iframe src="https://monitoringminecraft.ru/status-iframe2y/31.129.251.64%3A25577.png" frameborder="no" allowTransparency="true" height="22" scrolling="no"></iframe>
+	    
+            <a href="{{ url_for('download_launcher') }}" download>
+                <button class="glow-on-hover">Скачать лаунчер</button>
+            </a>
+            <a href="{{ url_for('download_java') }}" download>
+                <button class="glow-on-hover">Скачать Java</button>
+            </a>
+            <h3>Rage Сервер:</h3>
+            <p id="ipPort">projectcats.fun:22005</p>
+            <button onclick="copyIPPort()" class="glow-on-hover">Копировать IP</button>
+            <a href="{{ url_for('download_rage') }}" download>
+                <button class="glow-on-hover">Скачать RAGE</button>
+            </a>
+            <h3>Контакты:</h3>
+            <a href="https://t.me/projectcats">
+                <button class="glow-on-hover">Мы в Телеграм</button>
+            </a>
+	    <a href="https://www.instagram.com/_project_cats_?igsh=MWliNXV2N3ExMjNpZQ%3D%3D&utm_source=qr">
+                <button class="glow-on-hover">Мы в Инстаграм</button>
+            </a>
+	    <a href="https://www.tiktok.com/@project_cats?_t=8k149aUGVpG&_r=1">
+                <button class="glow-on-hover">Мы в TikTok</button>
+            </a>
+
+        </div>
+    </div>
+    <script>
+        var register = false;
+        var changepassw = false;
+        var changeskin = false;
+        var changecloak = false;
+    function copyIPPort() {
+        var element = document.getElementById("ipPort");
+        var text = element.innerText;
+        var tempTextarea = document.createElement("textarea");
+        tempTextarea.value = text;
+        document.body.appendChild(tempTextarea);
+        tempTextarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempTextarea);
+    }
+    function setChangeSkin() {
+        changeskin = !changeskin;
+        var changechangeskin = document.getElementById('setSkinColumn');
+        changechangeskin.style.display = changeskin ? 'block' : 'none';
+    }
+    function setChangeCloak() {
+        changecloak = !changecloak;
+        var changechangeskin = document.getElementById('setCloaksColumn');
+        changechangeskin.style.display = changecloak ? 'block' : 'none';
+    }
+    function setChangePassw() {
+        changepassw = !changepassw;
+        var changepasswordColumn = document.getElementById('changepasswordColumn');
+        changepasswordColumn.style.display = changepassw ? 'block' : 'none';
+    }
+    function setRegister() {
+        register = !register;
+        var loginColumn = document.getElementById('loginColumn');
+        var registerColumn = document.getElementById('registerColumn');
+
+        loginColumn.style.display = register ? 'none' : 'block';
+        registerColumn.style.display = register ? 'block' : 'none';
+    }
+
+    function addMoney() {
+            var addMoneyBtn = document.getElementById('addMoneyBtn');
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/addmoney', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText);
+                }
+            };
+            xhr.send();
+            var currentCoins = parseInt(document.getElementById('catCoins').innerText);
+            document.getElementById('catCoins').innerText = currentCoins + 1000;
+            addMoneyBtn.style.display = false ? 'block' : 'none';
+            setTimeout(function() {
+                    addMoneyBtn.style.display = true ? 'block' : 'none';
+                }, 5000);
+            }
+
+    function sendDataToChangePassw() {
+	    document.querySelector('.changebadpassword').style.display = 'none';
+   	    var passwordRegex = /^[a-zA-Z0-9!@*$]{6,30}$/;
+        var input1Value;
+            input1Value = document.getElementById('passwordchange').value;
+	   	if (!passwordRegex.test(input1Value)) {
+	    document.querySelector('.changebadpassword').style.display = 'block';
+    		} else {
+            if (input1Value !== null){
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/changepassword', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText);
+                }
+            };
+            var formData = 'passw=' + encodeURIComponent(input1Value);
+            xhr.send(formData);
+            }
+            setTimeout(function() {
+        // Ваш код, який викликається після затримки
+        location.reload();
+    }, 1000);    }
+        }
+    function sendDataToLogin(user, passw) {
+        var input1Value, input2Value;
+
+        // Перевірка, чи передані параметри user та passw
+        if (user !== null && passw !== null) {
+            input1Value = user;
+            input2Value = passw;
+        } else {
+            input1Value = document.getElementById('username').value;
+            input2Value = document.getElementById('password').value;
+        }
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/logining', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText);
+                }
+            };
+
+            var formData = 'user=' + encodeURIComponent(input1Value) + '&passw=' + encodeURIComponent(input2Value);
+            xhr.send(formData);
+            setTimeout(function() {
+        // Ваш код, який викликається після затримки
+        location.reload();
+    }, 1000);
+        }
+        function sendDataToRegister() {
+	    document.querySelector('.registerbadlogin').style.display = 'none';
+	    document.querySelector('.registerbadpassword').style.display = 'none';
+	    document.querySelector('.registerbademail').style.display = 'none';
+	    document.querySelector('.registerbadpasswordcopy').style.display = 'none';
+	    registerbademail = false;
+            var input1Value = document.getElementById('usernamereg').value;
+            var input2Value = document.getElementById('passwordreg').value;
+            var input3Value = document.getElementById('password_copy').value;
+            var input4Value = document.getElementById('Email').value;
+   	    var loginRegex = /^[a-zA-Z0-9]{4,20}$/;
+	    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+   	    var passwordRegex = /^[a-zA-Z0-9!@*$]{6,30}$/;
+		if (!loginRegex.test(input1Value)) {
+        	document.querySelector('.registerbadlogin').style.display = 'block';
+    		} else {
+		if (!emailRegex.test(input4Value)) {
+        	document.querySelector('.registerbademail').style.display = 'block';
+    		} else {
+	   	if (!passwordRegex.test(input2Value)) {
+	   	document.querySelector('.registerbadpassword').style.display = 'block'; 
+    		} else {
+	   	if (input2Value !==input3Value) {
+	    	document.querySelector('.registerbadpasswordcopy').style.display = 'block';
+    		} else {
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/registering', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText);
+                }
+            };
+
+            var formData = 'user=' + encodeURIComponent(input1Value) + '&passw=' + encodeURIComponent(input2Value) + '&passw_copy=' + encodeURIComponent(input3Value) + '&email=' + encodeURIComponent(input4Value);
+            xhr.send(formData);
+            setTimeout(function() {
+        // Ваш код, який викликається після затримки
+        sendDataToLogin(input1Value,input2Value);
+    }, 1000);}}}}
+        }
+        function getCookie() {
+            fetch('/get_cookie');
+        }
+        function logout() {
+            fetch('/set_cookie');
+            setTimeout(function() {
+        // Ваш код, який викликається після затримки
+        location.reload();
+    }, 1000);
+        }
+        
+    </script>
+</body>
+</html>
